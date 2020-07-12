@@ -13,9 +13,6 @@ export function reducer(state: Toast[] = [], action: ToastActions.Actions) {
         case ToastActions.REMOVE_TOAST:
             state = [...state];
             return state.filter(Toast => Toast.id !== action.payload);
-
-        case ToastActions.GROUP_TOAST:
-            return [...state, action.payload];
          
         default:
             return state;
