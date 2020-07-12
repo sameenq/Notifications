@@ -1,0 +1,70 @@
+<div class="container">
+    <h1>Toast Messages</h1>
+  
+    <label>Timeout Duration</label>
+    <input [(ngModel)]="duration" type="number" />
+  
+    <label>Limit</label>
+    <input [(ngModel)]="limit" type="number" />
+  
+    <label>Notification Message</label>
+    <input [(ngModel)]="message" type="text" />
+  
+    <label>Position</label>
+    <select [(ngModel)]="position">
+      <option value="top-right">Top Right</option>
+      <option value="top-left">Top Left</option>
+      <option value="bottom-right">Bottom Right</option>
+      <option value="bottom-left">Bottom Left</option>
+    </select>
+  
+    <button class="btn btn-success" (click)="showSuccess()">Success</button>
+    <button class="btn btn-error" (click)="showError()">Error</button>
+    <button class="btn btn-warning" (click)="showWarning()">Warning</button>
+  </div>
+
+  <div class="position" [ngClass]="position">
+    <div *ngFor="let toast of toasts | async;" class="toast">
+        <a class="close" (click)="removeToast(toast.id)">&times;</a>
+        <div class="toast-header"
+        [ngClass]="{
+          'header-success': toast.type === toastType.SUCCESS,
+          'header-warning': toast.type === toastType.WARNING,
+          'header-error': toast.type === toastType.ERROR
+        }">
+        {{ toast.heading }}
+      </div>
+      <div class="toast-body">
+        <p>{{ toast.message }}</p>
+      </div>
+    </div>
+     <!--Group Toast-->
+  <div *ngIf="groupToasts.length>0;"  class="toast">
+    <span class="badge">{{groupToasts.length}}</span>
+    <div class="toast-header header-group">Group Notifications</div>
+    <div class="toast-body"
+    (click)="element.class = element.class == 'showChildren' ? '' :  'showChildren'"
+    [ngClass]="{ hideChildren : element.class !== 'showChildren' }"
+     #element> {{element.ngClass}} 
+    <button (click)='toggle()'>Expand/Collapse Messages</button>
+    <div *ngFor="let groupMessage of groupToasts;" > 
+        <div>
+          <b class="toast-subheading" 
+          [ngClass]="{
+          'subheading-success': groupMessage.type === toastType.SUCCESS,
+          'subheading-warning': groupMessage.type === toastType.WARNING,
+          'subheading-error': groupMessage.type === toastType.ERROR
+          }">
+          {{groupMessage.type}}
+        </b> 
+        {{groupMessage.message}}
+      </div>
+    </div>
+    </div>
+</div>
+  </div>
+
+  
+
+  
+  
